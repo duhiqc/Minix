@@ -10,6 +10,7 @@ import { readText, writeText } from '@tauri-apps/api/clipboard';
 import { show_message } from "./Dialog";
 import { open } from '@tauri-apps/api/dialog';
 import { convertDownloadLinkToUtf8 } from "./Files";
+import timeout from "../assets/timeout.svg";
 
 function TaskItem(props: any) {
     //下载栏信息
@@ -22,6 +23,15 @@ function TaskItem(props: any) {
     const [threads, setThreads] = useState("64");
     //控制组组件的删除
     const [isComponentVisible, setIsComponentVisible] = useState(true);
+    const [progress, setProgress] = useState(0);
+
+    function test() {
+        if (progress <= 100) {
+            setTimeout(() => {
+                setProgress(progress + 1);
+            }, 500);
+        }
+    }
 
     return (
         <>
@@ -64,9 +74,52 @@ function TaskItem(props: any) {
                         border: '1px solid #414141',
                         borderRadius: 12,
                         boxShadow: "0px 1px 8px black",
-                        visibility: infoView ? "visible" : "hidden"
+                        visibility: infoView ? "visible" : "hidden",
+                        overflow: "hidden"
                     }}>
                         <InfoContent url={link} setShow={setIsComponentVisible}></InfoContent>
+                        <div style={{
+                            position: "absolute",
+                            bottom: 0,
+                            left: 0,
+                            width: `${progress}%`,
+                            height: 4,
+                            backgroundColor: "#3036ba",
+                        }}></div>
+                        {/* 删除任务的按钮 */}
+                        <IconButton style={{
+                            position: "absolute",
+                            top: 7,
+                            right: 14,
+                            width: 34,
+                            height: 34,
+                            // backgroundColor: "grey"
+                            color: 'white',
+                        }} onClick={() => {
+                            setTimeout(() => {
+                                props["setShow"](false);
+                            }, 120);
+                        }}>
+                            <img src={closeIcon} style={{
+                                width: 18,
+                                height: 18,
+                                pointerEvents: "none"
+                            }} />
+                        </IconButton>
+                        {/* 暂停和结束按钮 */}
+                        <IconButton style={{
+                            position: "absolute",
+                            top: 44,
+                            right: 14,
+                            width: 34,
+                            height: 34,
+                            color: "white",
+                            fontFamily: "SEGOEICONS",
+                            fontSize: 18,
+                            fontWeight: "10"
+                        }}>
+                            &#xe768;
+                        </IconButton>
                     </div>
 
                     {/* 卡片 */}
@@ -145,7 +198,6 @@ function TaskItem(props: any) {
 export default TaskItem;
 
 function InfoContent(props: any) {
-
     return (
         <div style={{
             position: "absolute",
@@ -205,26 +257,6 @@ function InfoContent(props: any) {
                 show_message("复制成功", "copy");
             }} value={props["url"]} readOnly>
             </input>
-
-            <IconButton style={{
-                position: "absolute",
-                top: -1,
-                right: -42,
-                width: 34,
-                height: 34,
-                // backgroundColor: "grey"
-                color: 'white',
-            }} onClick={() => {
-                setTimeout(() => {
-                    props["setShow"](false);
-                }, 120);
-            }}>
-                <img src={closeIcon} style={{
-                    width: 18,
-                    height: 18,
-                    pointerEvents: "none"
-                }} />
-            </IconButton>
         </div>
     )
 }
