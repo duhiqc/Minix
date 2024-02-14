@@ -1,0 +1,43 @@
+.text {
+    position: absolute;
+    left: 0;
+    width: 60px;
+    height: 36px;
+    color: white;
+    text-align: center;
+    line-height: 36px;
+    font-size: 18px;
+    font-family: system-ui;
+    /* background-color: aquamarine; */
+}
+
+.text:hover {
+    cursor: default;
+}
+
+.box {
+    position: absolute;
+    left: 18px;
+    top: 40px;
+    width: 85px;
+    height: 36px;
+    /* background-color: rgb(255, 157, 0); */
+}
+
+.icon-box {
+    position: absolute;
+    right: 0;
+    width: 26px;
+    height: 36px;
+    /* background-color: red; */
+}
+
+.icon {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: calc(50% - 12px + 1px);
+    left: calc(50% - 12px);
+    pointer-events: none;
+    color: #cdcdcd;
+}

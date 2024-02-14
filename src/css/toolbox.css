@@ -1,0 +1,17 @@
+.toolbox {
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.toolbox {
+    position: absolute;
+    width: 128px;
+    height: 32px;
+    top: 44px;
+    right: 32px;
+    /* background-color: ; */
+}

@@ -1,0 +1,39 @@
+body {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.container .titlebar .line {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg);
+}
+
+.titlebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 42px;
+}
+
+.line {
+    position: absolute;
+    left: calc(50%);
+    top: 76px;
+    width: 370px;
+    height: 2px;
+    transform: translateX(-50%);
+    background-color: var(--line);
+}

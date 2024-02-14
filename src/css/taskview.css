@@ -1,0 +1,9 @@
+.taskview {
+    position: absolute;
+    top: 84px;
+    left: calc(50%);
+    width: 370px;
+    height: calc(100% - 86px);
+    transform: translateX(-50%);
+    /* background-color: grey; */
+}

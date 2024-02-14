@@ -1,0 +1,7 @@
+.color-button {
+    color: white;
+}
+
+.color-button:hover {
+    color: #4e4beb;
+}
