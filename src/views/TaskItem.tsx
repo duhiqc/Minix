@@ -142,17 +142,6 @@ function TaskItem(props: any) {
 export default TaskItem;
 
 function InfoContent(props: any) {
-    const [shadow, setShadow] = useState("1px -1px 0px #303030, -1px -1px 0px #303030, 0px 1px 0px #303030");
-    const defaultStyle = "1px -1px 0px #303030, -1px -1px 0px #303030, 0px 1px 0px #303030";
-    const actionStyle = "1px -1px 0px #303030, -1px -1px 0px #303030, 0px 2px 1px #3035ba";
-    const inputRef = useRef<HTMLInputElement>(null);
-
-    if (inputRef.current) {
-        const isTip = inputRef.current.clientWidth < inputRef.current.scrollWidth
-        if (isTip) {
-            setShadow(actionStyle);
-        }
-    }
 
     return (
         <div style={{
@@ -161,14 +150,13 @@ function InfoContent(props: any) {
             height: 30,
             top: 11,
             left: 14,
-            boxShadow: shadow,
             borderRadius: 6,
             backgroundColor: "transparent",
         }}>
             <div style={{
                 position: "absolute",
-                left: -2,
-                top: 1,
+                left: 0,
+                top: 0,
                 width: 32,
                 height: 30,
                 color: 'white'
@@ -186,7 +174,7 @@ function InfoContent(props: any) {
                 }} />
             </div>
 
-            <input ref={inputRef} type="text" style={{
+            <input type="text" style={{
                 position: "absolute",
                 width: "calc(100% - 32px)",
                 height: 30,
@@ -211,16 +199,6 @@ function InfoContent(props: any) {
                 show_message("复制成功", "copy");
             }} value={props["url"]} readOnly>
             </input>
-            <div style={{
-                position: "absolute",
-                right: 0,
-                height: "100%",
-                width: 36,
-                pointerEvents: "none",
-                borderRadius: "0 6px 6px 0",
-                // background: linear
-                // boxShadow: "1px -1px 0px #303030, -1px -1px 0px #303030, 0px 1px 0px #303030",
-            }}></div>
         </div>
     )
 }
