@@ -20,122 +20,125 @@ function TaskItem(props: any) {
     const [link, setLink] = useState("");
     const [path, setPath] = useState("/Users/lqc/Downloads/")
     const [threads, setThreads] = useState("64");
+    //控制组组件的删除
+    const [isComponentVisible, setIsComponentVisible] = useState(true);
 
     return (
-        <div style={{
-            position: "absolute",
-            top: props["index"] * 122,
-            left: 0,
-            width: "100%",
-            height: 118
-            // backgroundColor: 'grey'
-        }}>
-            {/* 标题文字 */}
-            <div style={{
-                position: "absolute",
-                fontFamily: "system-ui",
-                fontSize: 14,
-                userSelect: "none",
-                WebkitUserSelect: "none",
-                KhtmlUserSelect: "none",
-                msUserSelect: "none",
-                MozUserSelect: "none",
-                lineHeight: "26px",
-                top: -1,
-                left: 8,
-                color: "#c3c3c3",
-                cursor: "default"
-            }}>
-                {fileName}
-            </div>
-
-            {/* 信息栏 */}
-            <div style={{
-                position: "absolute",
-                bottom: 0,
-                left: -1,
-                width: "100%",
-                height: 92,
-                backgroundColor: '#1d1d1d',
-                border: '1px solid #414141',
-                borderRadius: 12,
-                boxShadow: "0px 1px 8px black",
-                visibility: infoView ? "visible" : "hidden"
-            }}>
-                <InfoContent url={link}></InfoContent>
-            </div>
-
-            {/* 卡片 */}
-            <div style={{
-                position: "absolute",
-                bottom: 0,
-                left: -1,
-                width: "100%",
-                height: 92,
-                backgroundColor: '#1d1d1d',
-                border: '1px solid #414141',
-                borderRadius: 12,
-                boxShadow: "0px 1px 8px black",
-                visibility: progressView ? "visible" : "hidden"
-            }}>
-                <LinkLine setLink={setLink}></LinkLine>
-                <PathLine path={path} setPath={setPath}></PathLine>
-                <ThreadLine threads={threads} setThreads={setThreads}></ThreadLine>
-                <IconButton style={{
+        <>
+            {isComponentVisible && (
+                <div style={{
                     position: "absolute",
-                    top: 8,
-                    right: 12,
-                    width: 34,
-                    height: 34,
-                    // backgroundColor: "grey"
-                    color: 'white',
-                }} onClick={() => {
-                    setTimeout(() => {
-                        props["cancel"]("hidden");
-                        setLink("");
-                        setPath("/Users/lqc/Downloads/");
-                        setThreads("64");
-                    }, 120);
+                    top: props["index"] * 122,
+                    left: 0,
+                    width: "100%",
+                    height: 118
+                    // backgroundColor: 'grey'
                 }}>
-                    <img src={closeIcon} style={{
-                        width: 18,
-                        height: 18,
-                        pointerEvents: "none"
-                    }} />
-                </IconButton>
-                <button style={{
-                    position: "absolute",
-                    top: 51,
-                    right: 14,
-                    width: 30,
-                    height: 30,
-                    backgroundColor: '#3036ba',
-                    borderRadius: 6,
-                    boxShadow: '1px 0px 0px #3036ba, -1px 0px 0px #3036ba, 0px 1px 0px #1d1b7b, 0px -1px 0px #4e4beb',
-                    border: 'none'
-                }} onClick={() => {
-                    console.log(link);
-                    if (isTrueDownloadLink(link)) {
-                        setProgressView(false);
-                        setInfoView(true);
-                        setFileName(convertDownloadLinkToUtf8(link));
-                    } else {
-                        show_message("请输入正确的链接", "err");
-                    }
-                }}>
-                    <img src={download} style={{
-                        position: 'absolute',
-                        top: "50%",
-                        left: "50%",
-                        width: 18,
-                        height: 18,
-                        transform: "translate(-50%, -50%)",
-                        color: '#313131',
-                        pointerEvents: "none"
-                    }} />
-                </button>
-            </div>
-        </div>
+                    {/* 标题文字 */}
+                    <div style={{
+                        position: "absolute",
+                        fontFamily: "system-ui",
+                        fontSize: 14,
+                        userSelect: "none",
+                        WebkitUserSelect: "none",
+                        KhtmlUserSelect: "none",
+                        msUserSelect: "none",
+                        MozUserSelect: "none",
+                        lineHeight: "26px",
+                        top: -1,
+                        left: 8,
+                        color: "#c3c3c3",
+                        cursor: "default"
+                    }}>
+                        {fileName}
+                    </div>
+
+                    {/* 信息栏 */}
+                    <div style={{
+                        position: "absolute",
+                        bottom: 0,
+                        left: -1,
+                        width: "100%",
+                        height: 92,
+                        backgroundColor: '#1d1d1d',
+                        border: '1px solid #414141',
+                        borderRadius: 12,
+                        boxShadow: "0px 1px 8px black",
+                        visibility: infoView ? "visible" : "hidden"
+                    }}>
+                        <InfoContent url={link} setShow={setIsComponentVisible}></InfoContent>
+                    </div>
+
+                    {/* 卡片 */}
+                    <div style={{
+                        position: "absolute",
+                        bottom: 0,
+                        left: -1,
+                        width: "100%",
+                        height: 92,
+                        backgroundColor: '#1d1d1d',
+                        border: '1px solid #414141',
+                        borderRadius: 12,
+                        boxShadow: "0px 1px 8px black",
+                        visibility: progressView ? "visible" : "hidden"
+                    }}>
+                        <LinkLine setLink={setLink}></LinkLine>
+                        <PathLine path={path} setPath={setPath}></PathLine>
+                        <ThreadLine threads={threads} setThreads={setThreads}></ThreadLine>
+                        <IconButton style={{
+                            position: "absolute",
+                            top: 8,
+                            right: 12,
+                            width: 34,
+                            height: 34,
+                            // backgroundColor: "grey"
+                            color: 'white',
+                        }} onClick={() => {
+                            setIsComponentVisible(false);
+                        }}>
+                            <img src={closeIcon} style={{
+                                width: 18,
+                                height: 18,
+                                pointerEvents: "none"
+                            }} />
+                        </IconButton>
+                        <button style={{
+                            position: "absolute",
+                            top: 51,
+                            right: 14,
+                            width: 30,
+                            height: 30,
+                            backgroundColor: '#3036ba',
+                            borderRadius: 6,
+                            boxShadow: '1px 0px 0px #3036ba, -1px 0px 0px #3036ba, 0px 1px 0px #1d1b7b, 0px -1px 0px #4e4beb',
+                            border: 'none'
+                        }} onClick={() => {
+                            console.log(link);
+                            if (isTrueDownloadLink(link)) {
+                                setProgressView(false);
+                                setInfoView(true);
+                                setFileName(convertDownloadLinkToUtf8(link));
+
+                            } else {
+                                show_message("请输入正确的链接", "err");
+                            }
+                        }}>
+                            <img src={download} style={{
+                                position: 'absolute',
+                                top: "50%",
+                                left: "50%",
+                                width: 18,
+                                height: 18,
+                                transform: "translate(-50%, -50%)",
+                                color: '#313131',
+                                pointerEvents: "none"
+                            }} />
+                        </button>
+                    </div>
+                </div>
+            )}
+        </>
+
     )
 }
 
@@ -148,15 +151,15 @@ function InfoContent(props: any) {
             position: "absolute",
             width: 300,
             height: 30,
-            top: 11,
+            top: 8,
             left: 14,
             borderRadius: 6,
             backgroundColor: "transparent",
         }}>
             <div style={{
                 position: "absolute",
-                left: 0,
-                top: 0,
+                left: -4,
+                top: 1,
                 width: 32,
                 height: 30,
                 color: 'white'
@@ -179,7 +182,7 @@ function InfoContent(props: any) {
                 width: "calc(100% - 32px)",
                 height: 30,
                 top: 0,
-                right: 0,
+                right: 2,
                 borderRadius: 6,
                 outline: "none",
                 padding: 0,
@@ -193,12 +196,35 @@ function InfoContent(props: any) {
                 MozUserSelect: "none",
                 WebkitUserSelect: "none",
                 msUserSelect: "none",
-                userSelect: "none"
+                userSelect: "none",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                overflow: "hidden"
             }} onClick={async () => {
                 await writeText(props["url"]);
                 show_message("复制成功", "copy");
             }} value={props["url"]} readOnly>
             </input>
+
+            <IconButton style={{
+                position: "absolute",
+                top: -1,
+                right: -42,
+                width: 34,
+                height: 34,
+                // backgroundColor: "grey"
+                color: 'white',
+            }} onClick={() => {
+                setTimeout(() => {
+                    props["setShow"](false);
+                }, 120);
+            }}>
+                <img src={closeIcon} style={{
+                    width: 18,
+                    height: 18,
+                    pointerEvents: "none"
+                }} />
+            </IconButton>
         </div>
     )
 }
