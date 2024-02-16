@@ -10,7 +10,8 @@ import { readText, writeText } from '@tauri-apps/api/clipboard';
 import { show_message } from "./Dialog";
 import { open } from '@tauri-apps/api/dialog';
 import { convertDownloadLinkToUtf8 } from "./Files";
-import timeout from "../assets/timeout.svg";
+import timeout from "../assets/Play.svg";
+import speed from "../assets/Speed.svg";
 
 function TaskItem(props: any) {
     //下载栏信息
@@ -19,19 +20,10 @@ function TaskItem(props: any) {
     const [progressView, setProgressView] = useState(true);
     //下载信息
     const [link, setLink] = useState("");
-    const [path, setPath] = useState("/Users/lqc/Downloads/")
+    const [path, setPath] = useState("/Users/lqc/Public/minecraft/assets/objects/00")
     const [threads, setThreads] = useState("64");
     //控制组组件的删除
     const [isComponentVisible, setIsComponentVisible] = useState(true);
-    const [progress, setProgress] = useState(0);
-
-    function test() {
-        if (progress <= 100) {
-            setTimeout(() => {
-                setProgress(progress + 1);
-            }, 500);
-        }
-    }
 
     return (
         <>
@@ -82,7 +74,7 @@ function TaskItem(props: any) {
                             position: "absolute",
                             bottom: 0,
                             left: 0,
-                            width: `${progress}%`,
+                            width: `${0}%`,
                             height: 4,
                             backgroundColor: "#3036ba",
                         }}></div>
@@ -109,17 +101,108 @@ function TaskItem(props: any) {
                         {/* 暂停和结束按钮 */}
                         <IconButton style={{
                             position: "absolute",
-                            top: 44,
+                            top: 47,
                             right: 14,
-                            width: 34,
-                            height: 34,
+                            width: 32,
+                            height: 32,
+                            backgroundColor: "#141414",//"#3036ba"
+                            borderRadius: 8,
                             color: "white",
-                            fontFamily: "SEGOEICONS",
-                            fontSize: 18,
-                            fontWeight: "10"
+                            boxShadow: "0px 0px 2px grey"
                         }}>
-                            &#xe768;
+                            <img src={timeout} style={{
+                                width: 18,
+                                height: 18,
+                                pointerEvents: "none"
+                            }} />
                         </IconButton>
+
+                        {/* 下载 速度展示栏 */}
+                        <div style={{
+                            position: "absolute",
+                            top: 47,
+                            right: 60,
+                            width: 88,
+                            height: 32,
+                            color: "white",
+                        }}>
+                            <img src={speed} style={{
+                                position: "absolute",
+                                left: 4,
+                                top: "50%",
+                                transform: "translateY(-50%)",
+                                width: 18,
+                                height: 18,
+                                pointerEvents: "none"
+                            }} />
+                            <div style={{
+                                position: "absolute",
+                                top: "50%",
+                                right: 0,
+                                transform: "translateY(-50%)",
+                                fontSize: 14,
+                                fontFamily: "system-ui"
+                            }}>
+                                10.9MB/S
+                            </div>
+                        </div>
+
+                        {/* 路径栏 */}
+                        <div style={{
+                            position: "absolute",
+                            top: 47,
+                            left: 12,
+                            width: 206,
+                            height: 32,
+                            backgroundColor: "transparent",
+                        }}>
+                            <IconButton style={{
+                                position: "absolute",
+                                width: 30,
+                                height: 30,
+                                backgroundColor: "transparent",
+                                borderRadius: 4,
+                                color: 'white'
+                            }} onClick={async () => {
+                                await writeText(path);
+                                show_message("复制成功", "copy");
+                            }}>
+                                <img src={folder} style={{
+                                    position: "absolute",
+                                    width: 16,
+                                    height: 16,
+                                    left: "50%",
+                                    top: "50%",
+                                    transform: "translate(-50%, -50%)",
+                                    pointerEvents: "none"
+                                }} />
+                            </IconButton>
+                            <input type="text" style={{
+                                position: "absolute",
+                                width: "calc(100% - 34px)",
+                                height: 30,
+                                top: 0,
+                                right: 2,
+                                borderRadius: 6,
+                                outline: "none",
+                                padding: 0,
+                                borderStyle: "solid",
+                                border: "none",
+                                backgroundColor: "transparent",
+                                color: 'whitesmoke',
+                                fontFamily: "system-ui",
+                                fontSize: 14,
+                                textIndent: 2,
+                                MozUserSelect: "none",
+                                WebkitUserSelect: "none",
+                                msUserSelect: "none",
+                                userSelect: "none",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden"
+                            }} value={path} readOnly>
+                            </input>
+                        </div>
                     </div>
 
                     {/* 卡片 */}
@@ -203,12 +286,12 @@ function InfoContent(props: any) {
             position: "absolute",
             width: 300,
             height: 30,
-            top: 8,
+            top: 9,
             left: 14,
             borderRadius: 6,
             backgroundColor: "transparent",
         }}>
-            <div style={{
+            <IconButton style={{
                 position: "absolute",
                 left: -4,
                 top: 1,
@@ -217,6 +300,8 @@ function InfoContent(props: any) {
                 color: 'white'
                 // backgroundColor: 'grey'
             }} onClick={async () => {
+                await writeText(props["url"]);
+                show_message("复制成功", "copy");
             }}>
                 <img src={link} style={{
                     position: "absolute",
@@ -227,7 +312,7 @@ function InfoContent(props: any) {
                     transform: "translate(-50%, -50%)",
                     pointerEvents: "none"
                 }} />
-            </div>
+            </IconButton>
 
             <input type="text" style={{
                 position: "absolute",
@@ -252,9 +337,6 @@ function InfoContent(props: any) {
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
                 overflow: "hidden"
-            }} onClick={async () => {
-                await writeText(props["url"]);
-                show_message("复制成功", "copy");
             }} value={props["url"]} readOnly>
             </input>
         </div>
