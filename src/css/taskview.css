@@ -2,8 +2,21 @@
     position: absolute;
     top: 84px;
     left: calc(50%);
-    width: 370px;
+    width: 100%;
     height: calc(100% - 86px);
     transform: translateX(-50%);
-    /* background-color: grey; */
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+/* 设置滚动条样式 */
+::-webkit-scrollbar {
+    width: 0px;
+    /* 滚动条宽度 */
+}
+
+/* 设置滚动条轨道的背景色 */
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    /* 背景透明 */
 }

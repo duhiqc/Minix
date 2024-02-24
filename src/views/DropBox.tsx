@@ -6,10 +6,14 @@ function DropBox() {
         <div className="box" onClick={() => {
             console.log("123");
         }}>
-            <div className="text">{"下载中"}</div>
+            <div className="text"></div>
             <div className="icon-box">
                 <ExpandMoreIcon fontSize="medium" className="icon"></ExpandMoreIcon>
             </div>
+            <select className="cards">
+                <option className="card" value="">下载中</option>
+                <option className="card" value="">已完成</option>
+            </select>
         </div>
     );
 }

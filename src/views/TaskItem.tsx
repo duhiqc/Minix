@@ -1,7 +1,7 @@
 import { IconButton } from "@material-ui/core";
 import "../css/taskview.css";
 import closeIcon from "../assets/Close.svg";
-import { useRef, useState } from "react";
+import { RefObject, useImperativeHandle, useRef, useState } from "react";
 import folder from "../assets/Folder.svg";
 import link from "../assets/Link.svg";
 import thread from "../assets/Threads.svg";
@@ -15,7 +15,7 @@ import speed from "../assets/Speed.svg";
 
 function TaskItem(props: any) {
     //下载栏信息
-    const [fileName, setFileName] = useState("新建任务");
+    const [fileName, setFileName] = useState("新建任务" + props["index"].toString());
     const [infoView, setInfoView] = useState(false);
     const [progressView, setProgressView] = useState(true);
     //下载信息
@@ -25,15 +25,17 @@ function TaskItem(props: any) {
     //控制组组件的删除
     const [isComponentVisible, setIsComponentVisible] = useState(true);
 
+
     return (
         <>
             {isComponentVisible && (
                 <div style={{
                     position: "absolute",
-                    top: props["index"] * 122,
+                    top: 0,
                     left: 0,
-                    width: "100%",
-                    height: 118
+                    width: 370,
+                    height: 118,
+                    // transform: "translateX(-50%)"
                     // backgroundColor: 'grey'
                 }}>
                     {/* 标题文字 */}
@@ -74,7 +76,7 @@ function TaskItem(props: any) {
                             position: "absolute",
                             bottom: 0,
                             left: 0,
-                            width: `${0}%`,
+                            width: `${100}%`,
                             height: 4,
                             backgroundColor: "#3036ba",
                         }}></div>
@@ -88,9 +90,6 @@ function TaskItem(props: any) {
                             // backgroundColor: "grey"
                             color: 'white',
                         }} onClick={() => {
-                            setTimeout(() => {
-                                props["setShow"](false);
-                            }, 120);
                         }}>
                             <img src={closeIcon} style={{
                                 width: 18,
@@ -229,9 +228,7 @@ function TaskItem(props: any) {
                             height: 34,
                             // backgroundColor: "grey"
                             color: 'white',
-                        }} onClick={() => {
-                            setIsComponentVisible(false);
-                        }}>
+                        }} onClick={() => props["onRemove"](setIsComponentVisible)}>
                             <img src={closeIcon} style={{
                                 width: 18,
                                 height: 18,
@@ -249,12 +246,10 @@ function TaskItem(props: any) {
                             boxShadow: '1px 0px 0px #3036ba, -1px 0px 0px #3036ba, 0px 1px 0px #1d1b7b, 0px -1px 0px #4e4beb',
                             border: 'none'
                         }} onClick={() => {
-                            console.log(link);
                             if (isTrueDownloadLink(link)) {
                                 setProgressView(false);
                                 setInfoView(true);
                                 setFileName(convertDownloadLinkToUtf8(link));
-
                             } else {
                                 show_message("请输入正确的链接", "err");
                             }
